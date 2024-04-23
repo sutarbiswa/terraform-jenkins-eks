@@ -14,7 +14,7 @@ pipeline {
                 }
             }
         }
-        stage('Intializing Terraform'){
+        stage('Initializing Terraform'){
             steps{
                 script{
                     dir('Eks'){
@@ -23,5 +23,32 @@ pipeline {
                 }
             }
         }
+        stage('Formatting Terraform'){
+            steps{
+                script{
+                    dir('Eks'){
+                        sh 'terraform fmt'
+                    }
+                }
+            }
+        }
+        stage('Validating Terraform'){
+            steps{
+                script{
+                    dir('Eks'){
+                        sh 'terraform validate'
+                    }
+                }
+            }
+        }
+        stage('Previewing the infra using Terraform'){
+            steps{
+                script{
+                    dir('Eks'){
+                        sh 'terraform plan'
+                    }
+                }
+            }
+        }
     }
-} 
+}  
